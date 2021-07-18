@@ -1,5 +1,7 @@
-import  qs from "qs";
+import { useCallback} from 'react'
+import qs from "qs";
 import * as auth from "auth-provider";
+import {useAuth} from 'context/auth-context'
 const apiUrl = process.env.REACT_APP_API_URL;
 
 interface Config extends RequestInit {
@@ -43,3 +45,15 @@ export const http = async (
       }
     });
 };
+// TS 中的typeof，是在静态环境运行的
+// return (...[endpoint, config]: Parameters<typeof http>) =>
+export const useHttp = () => {
+    const { user } = useAuth();
+    // utility type 的用法：用泛型给它传入一个其他类型，然后utility type对这个类型进行某种操作
+    return useCallback(
+      (...[endpoint, config]: Parameters<typeof http>) =>
+        http(endpoint, { ...config, token: user?.token }),
+      [user?.token]
+    );
+  };
+  
