@@ -26,7 +26,9 @@ export const SearchPanel = ({users,param,setParam}:SearchPanelProps) => {
                 onChange={evt => setParam({
                 ...param,
                 name:evt.target.value
-            })}></Input>
+                })}></Input>
+        </Form.Item>
+        <Form.Item>
             <Select value={param.personId} onChange={value => setParam({
                 ...param,
                 personId:value

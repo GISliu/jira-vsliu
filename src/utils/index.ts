@@ -48,4 +48,4 @@ export const useDebounce = <V>(value: V, delay?: number) => {
   
     return debouncedValue;
   };
-  
+  export const resetRoute=()=>{ window.location.href=window.location.origin}

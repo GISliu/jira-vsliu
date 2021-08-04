@@ -3,7 +3,14 @@ import { ProjectListScreen } from "screens/project-list"
 import { Dropdown ,Menu,Button} from "antd";
 import styled from "@emotion/styled";
 import { ReactComponent as SoftwareLogo } from "assets/software-logo.svg";
-import {ButtonNoPadding,Row} from "components/lib"
+import { ButtonNoPadding, Row } from "components/lib"
+import {Navigate, Routes,  Route } from 'react-router'
+import { BrowserRouter as Router } from "react-router-dom";
+import { ProjectScreen } from "screens/project";
+import { LoginScreen } from "unauthenticated-app/login";
+import App from "App";
+import { link } from "fs";
+import { resetRoute } from "utils";
 /**
  * grid 和 flex 各自的应用场景
  * 1. 要考虑，是一维布局 还是 二维布局
@@ -20,8 +27,13 @@ export const AuthenticatedApp = () => {
     return <Container>
          <PageHeader />
         <Main>
-        <ProjectListScreen></ProjectListScreen>
-
+            <Router>
+                <Routes>
+                    <Route path={'/projects'} element={<ProjectListScreen/>}></Route>
+                    <Route path={'/projects/:projectId/*'} element={<ProjectScreen />}></Route>
+                    <Navigate to={"/projects"} />
+                </Routes>
+            </Router>
         </Main>
     </Container>
        
@@ -31,7 +43,9 @@ const PageHeader = () => {
     return (
       <Header between={true}>
             <HeaderLeft gap={true}>
-            <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+                <Button type={'link'} onClick={resetRoute} >
+                    <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
+                </Button>
         </HeaderLeft>
             <HeaderRight>
                 <User></User>

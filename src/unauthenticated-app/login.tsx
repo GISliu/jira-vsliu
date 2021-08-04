@@ -6,7 +6,7 @@ import { useAsync } from "utils/use-async";
 const apiUrl=process.env.REACT_APP_API_URL
 export const LoginScreen = ({onError}:{onError:(error:Error)=>void}) => {
     
-    const { login } = useAuth()
+    const { login,user } = useAuth()
     const {run ,isLoading}=useAsync()
     const handleSubmit =async (values: { username: string, password: string }) => {
         try {
